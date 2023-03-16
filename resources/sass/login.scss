@@ -1,0 +1,34 @@
+.login {
+  /* logo font ***********************************************************************************************************************/
+  /* background image ------------------------------------------ */
+  /* public pages --------------------------------------------------------- */
+  /* search result preview text ******************************************************** */
+}
+.login html, .login body {
+  height:100%;
+  margin:0px;
+  padding:0px;
+}
+
+.login body {
+  font-family: Roboto, Tahoma, Geneva, sans-serif;
+  font-size: 10pt;
+  line-height: 1.5em;
+  background: #374A79;
+  color: white;
+}
+
+.login .form-container {
+  margin: 8% auto;
+  display: block;
+  width:500px;
+  text-align:center;
+}
+
+.login .form-container input{
+  margin-bottom:10px;
+}
+
+.login .card{
+  color: rgb(75, 75, 75);
+}

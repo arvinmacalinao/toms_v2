@@ -20,3 +20,14 @@ Route::get('dashboard', 'DashboardController@index')->name('dashboard.dashboard'
 
 //Accounts
 Route::get('accounts', 'AccountsController@index')->name('accounts.index');
+Route::get('accounts/new', 'AccountsController@new')->name('accounts.new');
+Route::get('accounts/edit/{id}', 'AccountsController@edit')->name('account.edit');
+Route::post('accounts/store/{id}', 'AccountsController@store')->name('account.save');
+Route::get('accounts/reset/{id}', 'AccountsController@reset')->name('account.reset');
+
+//Regions
+Route::get('regions', 'RegionsController@index')->name('region.index');
+Route::get('region/new', 'RegionsController@new')->name('region.new');
+Route::post('region/store/{id}', 'RegionsController@store')->name('region.save');
+Route::get('region/edit/{id}', 'RegionsController@edit')->name('region.edit');
+Route::get('region/delete/{id}', 'RegionsController@delete')->name('region.delete');

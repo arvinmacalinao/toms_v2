@@ -18,18 +18,18 @@
       <h3>Travel Order Management System</h3>
       <div class="card">
           <div class="card-header">
-              <h2>Please sign-in</h2>
+              <h4>Please sign-in</h4>
           </div>
           <div class="card-body">
               <form class="form" method="POST" action="{{ route('users.login') }}">
                 @csrf
                 <div class="form-outline mb-4">
-                <input class="form-control form-control-lg" type="text" placeholder="Username" name="username" id="username" maxlength="255" required="required" value="{{ old('username') }}">
+                <input class="form-control form-control-s" type="text" placeholder="Username" name="username" id="username" maxlength="255" required="required" value="{{ old('username') }}">
                 <label class="form-label" for="typeEmailX-2">Username</label>
               </div>
 
               <div class="form-outline mb-4">
-                <input class="form-control form-control-lg" type="password" placeholder="Password" name="password" id="password" maxlength="255" required="required">
+                <input class="form-control form-control-s" type="password" placeholder="Password" name="password" id="password" maxlength="255" required="required">
                 <label class="form-label" for="typePasswordX-2">Password</label>
               </div>
 

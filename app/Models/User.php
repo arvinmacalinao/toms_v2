@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -44,4 +45,27 @@ class User extends Authenticatable
     	$this->attributes['u_lname'] 		= ucwords($value);
     }
 
+    public function region()
+    {
+        return $this->belongsTo('App\Models\Region', 'rg_id', 'rg_id');
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Models\Role', 'r_id', 'r_id');
+    }
+
+    public function signature()
+    {
+        if(\Storage::disk('uploads')->exists('signature/'.$this->u_signature)) {
+            return asset('storage/uploads/signature/'.$this->u_signature);
+        }
+    }
+
+    public function scopeSearch($query, $search) {
+        return $query->where(function($query) use($search) {
+            if(strlen($search) == 0) return $query;
+			$query->where('u_fname', 'LIKE', "%$search%")->orWhere('u_mname', 'LIKE', "%$search%")->orWhere('u_lname', 'LIKE', "%$search%");
+		});
+    }    
 }

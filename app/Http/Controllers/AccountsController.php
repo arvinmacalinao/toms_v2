@@ -22,8 +22,7 @@ class AccountsController extends Controller
             if(!Auth::user()) {
                 abort(404);
             }
-
-            // app('App\Http\Controllers\RecordLogController')->recordLog();
+            app('App\Http\Controllers\RecordLogsController')->recordLog();
             
             return $next($request);
         });
@@ -70,7 +69,7 @@ class AccountsController extends Controller
 
         $input      = $request->validated();
         if($id == 0) {
-            $request->request->add(['created_at' => Carbon::now()]);
+            $request->request->add(['encoded_by' => Auth::id(), 'created_at' => Carbon::now()]);
             $request->request->add(['u_division' => Role::where('r_id', $get_div_name)->value('r_name')]);
             $user   = User::create($request->except(['u_signature']));
             $user->update(['u_signature' => $u_sig,]);
@@ -80,7 +79,7 @@ class AccountsController extends Controller
                 $request->session()->put('session_msg', 'Record not found!');
                 return redirect(route('accounts.index'));
             } else {
-                $request->request->add(['updated_at' => Carbon::now()]);            
+                $request->request->add(['updated_by' => Auth::id(), 'updated_at' => Carbon::now()]);            
                 $user->update($request->except(['u_signature']));
 
                 if($request->hasFile('u_signature')){
@@ -111,5 +110,19 @@ class AccountsController extends Controller
         
         $request->session()->put('session_msg', 'Password successfully updated.');
         return redirect(route('accounts.index'));
+    }
+
+    public function delete(Request $request ,$id)
+    {
+        $user = User::where('u_id', $id)->first();
+        if(!$user) {
+            $request->session()->put('session_msg', 'Record not found!');
+            return redirect(route('accounts.index'));
+        } else {
+            $user->delete();
+            $user->update(['deleted_by' => Auth::id()]);
+            $request->session()->put('session_msg', 'Record deleted!');
+            return redirect(route('accounts.index'));
+        }
     }
 }

@@ -1,0 +1,12 @@
+SET @sql = '';
+
+SELECT CONCAT('ALTER TABLE ', to_attendance' ADD COLUMN created_by VARCHAR(255), ADD COLUMN updated_by VARCHAR(255), ADD COLUMN deleted_by VARCHAR(255), ADD COLUMN deleted_at timestamp;') INTO @sql
+FROM information_schema.tables 
+WHERE table_schema = 'toms' 
+AND table_name IN ('to_attendance', 'to_expenses', 'to_funds', 'to_modes', 'to_regions', 'to_roles', 'to_settings', 'to_so', 'to_travels', 'to_travel_comments', 'to_travel_documents', 'to_travel_funds_expenses', 'to_travel_passengers', 'to_users', 'to_user_logs');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+

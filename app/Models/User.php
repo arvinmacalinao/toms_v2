@@ -10,15 +10,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    // use SoftDeletes;
+    use SoftDeletes;
     use Notifiable;
 
     public $timestamps      = false;
     protected $table        = 'to_users';
     protected $primaryKey   = 'u_id';
-    protected $fillable     = ['u_username', 'u_password', 'u_suffix', 'u_fname', 'u_mname', 'u_lname', 'u_position', 'u_division', 'u_signature', 
-    'u_gender', 'u_image', 'rg_id', 'r_id', 'desktop_time_in', 'is_active', 'remember_token', 'created_at', 'updated_at'];
-    protected $dates        = [ 'created_at', 'updated_at' ];
+    protected $fillable     = ['u_username', 'u_password', 'u_suffix', 'u_fname', 'u_mname', 'u_lname', 'u_position', 'u_division', 'u_signature', 'u_gender', 'u_image', 'rg_id', 'r_id', 'desktop_time_in', 'is_active', 'remember_token', 'encoded_by', 'created_at', 'updated_by', 'updated_at', 'deleted_by', 'deleted_at'];
+    protected $dates        = [ 'created_at', 'updated_at', 'deleted_at' ];
 
     public function getAuthPassword()
     {

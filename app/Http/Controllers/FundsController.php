@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use View;
 use Carbon\Carbon;
-use App\Models\Region;
+use App\Models\Fund;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\RegionValidation;
+use App\Http\Requests\FundValidation;
 
-class RegionsController extends Controller
+class FundsController extends Controller
 {
     public function __construct() 
     {
-		$data = [ 'page' => 'Regions' ];
+		$data = [ 'page' => 'Funds' ];
 		View::share('data', $data);
 
         $this->middleware(function ($request, $next) {  
@@ -32,63 +32,63 @@ class RegionsController extends Controller
         $msg        = $request->session()->pull('session_msg', '');
         $search     = $request->get('qsearch') == NULL ? '' : $request->get('qsearch');
 
-        $rows       = Region::search($search)->paginate(20);
+        $rows       = Fund::search($search)->paginate(20);
 
-        return view('region.index', compact('rows', 'msg', 'search'));
+        return view('funds.index', compact('rows', 'msg', 'search'));
     }
 
     public function new(Request $request)
     {
         $msg        = $request->session()->pull('session_msg', '');
         $id         = 0;
-        $region       = new Region;
+        $fund       = new Fund;
 
-        return view('region.form', compact('msg', 'id', 'region'));
+        return view('funds.form', compact('msg', 'id', 'fund'));
     }
 
-    public function store(RegionValidation $request, $id)
+    public function store(FundValidation $request, $id)
     {   
         $input = $request->validated();
 
         if($id == 0)
         {   
             $request->request->add(['encoded_by' => Auth::id(), 'created_at' => Carbon::now()]);
-            $region     =   Region::create($request->all());
+            $fund     =   Fund::create($request->all());
         }
         else
         {   
-            $region   = Region::where('rg_id', $id)->first();
-            if(!$region) {
+            $fund   = Fund::where('f_id', $id)->first();
+            if(!$fund) {
                 $request->session()->put('session_msg', 'Record not found!');
-                return redirect(route('region.index'));
+                return redirect(route('fund.index'));
             } else {
                 $request->request->add(['updated_by' => Auth::id(), 'updated_at' => Carbon::now()]);            
-                $region->update($request->all());
+                $fund->update($request->all());
             }
         }
 
         $request->session()->put('session_msg', 'Record Updated');
-        return redirect(route('region.index'));
+        return redirect(route('funds.index'));
     }
 
     public function edit($id)
     {
-        $region     =   Region::FindorFail($id);
+        $fund     =   Fund::FindorFail($id);
 
-        return view('region.form', compact('region', 'id'));
+        return view('funds.form', compact('fund', 'id'));
     }
 
     public function delete(Request $request ,$id)
     {
-        $region = Region::where('rg_id', $id)->first();
-        if(!$region) {
+        $fund = Fund::where('f_id', $id)->first();
+        if(!$fund) {
             $request->session()->put('session_msg', 'Record not found!');
-            return redirect(route('region.index'));
+            return redirect(route('funds.index'));
         } else {
-            $region->delete();
-            $region->update(['deleted_by' => Auth::id()]);
+            $fund->delete();
+            $fund->update(['deleted_by' => Auth::id()]);
             $request->session()->put('session_msg', 'Record deleted!');
-            return redirect(route('region.index'));
+            return redirect(route('funds.index'));
         }
     }
 }

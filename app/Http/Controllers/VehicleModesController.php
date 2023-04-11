@@ -4,16 +4,16 @@ namespace App\Http\Controllers;
 
 use View;
 use Carbon\Carbon;
-use App\Models\Region;
+use App\Models\Mode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\RegionValidation;
+use App\Http\Requests\ModeValidation;
 
-class RegionsController extends Controller
+class VehicleModesController extends Controller
 {
     public function __construct() 
     {
-		$data = [ 'page' => 'Regions' ];
+		$data = [ 'page' => 'Vehicle Modes' ];
 		View::share('data', $data);
 
         $this->middleware(function ($request, $next) {  
@@ -29,66 +29,66 @@ class RegionsController extends Controller
 
     public function index(Request $request)
     {   
-        $msg        = $request->session()->pull('session_msg', '');
-        $search     = $request->get('qsearch') == NULL ? '' : $request->get('qsearch');
+        $msg        =   $request->session()->pull('session_msg', '');
+        $search     =   $request->get('qsearch') == NULL ? '' : $request->get('qsearch');
 
-        $rows       = Region::search($search)->paginate(20);
+        $rows       =   Mode::search($search)->paginate(20);
 
-        return view('region.index', compact('rows', 'msg', 'search'));
+        return view('vehicle_modes.index', compact('rows', 'msg', 'search'));
     }
 
     public function new(Request $request)
     {
         $msg        = $request->session()->pull('session_msg', '');
         $id         = 0;
-        $region       = new Region;
+        $mode       = new Mode;
 
-        return view('region.form', compact('msg', 'id', 'region'));
+        return view('vehicle_modes.form', compact('msg', 'id', 'mode'));
     }
 
-    public function store(RegionValidation $request, $id)
+    public function store(ModeValidation $request, $id)
     {   
         $input = $request->validated();
 
         if($id == 0)
         {   
             $request->request->add(['encoded_by' => Auth::id(), 'created_at' => Carbon::now()]);
-            $region     =   Region::create($request->all());
+            $mode     =   Mode::create($request->all());
         }
         else
         {   
-            $region   = Region::where('rg_id', $id)->first();
-            if(!$region) {
+            $mode   = Mode::where('m_id', $id)->first();
+            if(!$mode) {
                 $request->session()->put('session_msg', 'Record not found!');
-                return redirect(route('region.index'));
+                return redirect(route('modes.index'));
             } else {
                 $request->request->add(['updated_by' => Auth::id(), 'updated_at' => Carbon::now()]);            
-                $region->update($request->all());
+                $mode->update($request->all());
             }
         }
 
         $request->session()->put('session_msg', 'Record Updated');
-        return redirect(route('region.index'));
+        return redirect(route('modes.index'));
     }
 
     public function edit($id)
     {
-        $region     =   Region::FindorFail($id);
+        $mode     =   Mode::FindorFail($id);
 
-        return view('region.form', compact('region', 'id'));
+        return view('vehicle_modes.form', compact('mode', 'id'));
     }
 
     public function delete(Request $request ,$id)
     {
-        $region = Region::where('rg_id', $id)->first();
-        if(!$region) {
+        $mode = Mode::where('m_id', $id)->first();
+        if(!$mode) {
             $request->session()->put('session_msg', 'Record not found!');
-            return redirect(route('region.index'));
+            return redirect(route('modes.index'));
         } else {
-            $region->delete();
-            $region->update(['deleted_by' => Auth::id()]);
+            $mode->delete();
+            $mode->update(['deleted_by' => Auth::id()]);
             $request->session()->put('session_msg', 'Record deleted!');
-            return redirect(route('region.index'));
+            return redirect(route('modes.index'));
         }
     }
 }

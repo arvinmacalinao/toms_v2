@@ -113,7 +113,7 @@
                                     </p>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">{{ __('Action') }}</a>
+                                    <a class="dropdown-item" href="">{{ __('Action') }}</a>
                                     <a class="dropdown-item" href="#">{{ __('Another action') }}</a>
                                     <a class="dropdown-item" href="#">{{ __('Something else here') }}</a>
                                 </div>
@@ -127,9 +127,12 @@
                                     </p>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">{{ __('Action') }}</a>
-                                    <a class="dropdown-item" href="#">{{ __('Another action') }}</a>
-                                    <a class="dropdown-item" href="#">{{ __('Something else here') }}</a>
+                                    <a class="dropdown-item" href="{{ route('region.index') }}">{{ __('Regions') }}</a>
+                                    <a class="dropdown-item" href="{{ route('roles.index') }}">{{ __('Roles') }}</a>
+                                    <a class="dropdown-item" href="{{ route('funds.index') }}">{{ __('Funds') }}</a>
+                                    <a class="dropdown-item" href="{{ route('expenses.index') }}">{{ __('Expenses') }}</a>
+                                    <a class="dropdown-item" href="{{ route('modes.index') }}">{{ __('Vehicle Modes') }}</a>
+                                    <a class="dropdown-item" href="{{ route('settings.index') }}">{{ __('Region Settings') }}</a>
                                 </div>
                             </li>
                             <li class="nav-item btn-rotate dropdown">

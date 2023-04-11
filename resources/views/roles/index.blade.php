@@ -26,7 +26,7 @@
                             </form>
                             <div class="container-fluid">
                                 <div class="pull-right pr-2">
-                                    <a class="btn btn-primary btn-sm" href="{{ route('region.new') }}" title="{{ $data['page'] }}"><i class="fa fa-plus"> </i> Add {{ $data['page'] }}</a>
+                                    <a class="btn btn-primary btn-sm" href="{{ route('role.new') }}" title="{{ $data['page'] }}"><i class="fa fa-plus"> </i> Add {{ $data['page'] }}</a>
                                 </div>
                             </div>
                         </div>
@@ -34,8 +34,7 @@
                             <table class="table table-striped">
                                 <thead class="thead-dark">
                                     <th>#</th>
-                                    <th>Region Name</th>
-                                    <th>Region Code</th>
+                                    <th>Role Name</th>
                                     <th></th>
                                 </thead>
                                 <tbody>
@@ -45,11 +44,10 @@
                                     @foreach ($rows as $row)
                                       <tr>
                                          <td>{{ $ctr }}</td>
-                                         <td>{{ $row->rg_name }}</td>
-                                         <td>{{ $row->rg_short }}</td>
+                                         <td>{{ $row->r_name }}</td>
                                          <td>
-                                            <a href="{{ route('region.edit', ['id' => $row->rg_id]) }}" title="Update"><i class="fa fa-edit fa-lg" style="color:rgb(5, 141, 0)"></i></a>
-                                            <a href="{{ route('region.delete', ['id' => $row->rg_id]) }}" title="Delete" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa fa-window-close-o fa-lg" style="color:rgb(141, 0, 0)"></i></a>
+                                            <a href="{{ route('role.edit', ['id' => $row->r_id]) }}" title="Update"><i class="fa fa-edit fa-lg" style="color:rgb(5, 141, 0)"></i></a>
+                                            <a href="{{ route('role.delete', ['id' => $row->r_id]) }}" title="Delete" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa fa-window-close-o fa-lg" style="color:rgb(141, 0, 0)"></i></a>
                                          </td>
                                       </tr>
                                     @php

@@ -15,7 +15,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="content clearfix">
-                            <form class="row row-cols-lg-auto g-2 align-items-center" method="GET" action="{{ url()->current() }}">
+                            <form class="row row-cols-lg-auto g-2 align-items-center" method="POST" action="{{ url()->current() }}">
                                 @csrf
                                 <div class="col-auto">
                                     <input class="form-control" type="text" placeholder="Search..." name="qsearch" id="qsearch" maxlength="255" value="{{ old('search', $search) }}">
@@ -52,7 +52,7 @@
                                          <td>
                                             <a href="{{ route('account.reset' , ['id' => $row->u_id ]) }}" title="Reset"><i class="fa fa-repeat" style="color:rgb(0, 170, 170)"></i></a>
                                             <a href="{{ route('account.edit', ['id' => $row->u_id]) }}" title="Update"><i class="fa fa-edit fa-lg" style="color:rgb(5, 141, 0)"></i></a>
-                                        
+                                            <a href="{{ route('account.delete', ['id' => $row->u_id]) }}" title="Delete" onclick="return confirm('Are you sure you want to delete this data?')"><i class="fa fa-window-close-o fa-lg" style="color:rgb(141, 0, 0)"></i></a>
                                          </td>
                                       </tr>
                                     @php
